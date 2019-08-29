@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('nodeafter:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+app.set('host','0.0.0.0');
+/**
+ * Create HTTP server.
+ */
+
+ // 使用httpcreateServer()方法来创建一个web服务器；
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+//  服务器的作用
+//  提供服务器：对数据的服务
+//  浏览器：发送请求
+//  服务器：接受请求
+//  服务器：处理请求
+//  服务器：给个反馈（发送响应）
+// 注册request请求事件
+// 当客户短请求过来，就会自动触发服务器的request请求事件，然后执行第二参数，回调处理；
+server.on('error', onError);
+server.on('listening', onListening);
+
+// server.on('request', function (request, responses) {
+//   // request 请求事件处理函数，需要接收2个参数；
+//   // request 请求对象 ，用来接收获取客户端的一些请求，例如请求路径，request.url
+//   //  response 响应对象， 用来给客户端发送响应消息；
+//   console.log('收到客户端请求了', request.url)
+
+//   // responses对象有一个方法，write可以给客户端发送响应数据；write可以使用多次，但最后必须以end来结束响应；否则客户端会一直等待；
+//   responses.write('hello');
+//   responses.end();//告诉客户端，响应结束，可以呈递给用户；
+
+//   // response.end('hello');// 上面两条过时了，现在主要用这句；
+//   // 响应内容只能是字符串或者二进制；
+// })
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
