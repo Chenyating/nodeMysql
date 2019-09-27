@@ -10,12 +10,13 @@ router.get('/messageList', function (req, res, next) {
     var tableName = 'message'
     var num = req.query.num;
     var page = req.query.page;
-    var sql = `select * from ${tableName} order by id desc limit ${num * page},${num}`
+    var sql = `select name,content,headImg,returnTime,returnContent,createTime,message.id,user from ${tableName} LEFT JOIN users on ${tableName}.account=users.account order by ${tableName}.id desc limit ${num * page},${num}`
     mysqlPool(sql)
         .then((data) => {
             res.send(data);
         })
         .catch((err) => {
+            console.log(err,"??")
             res.send("请求错误");
         })
 });

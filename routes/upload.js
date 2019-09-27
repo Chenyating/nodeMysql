@@ -21,7 +21,7 @@ var imgRoad = '../resource/img/'
 var upload = multer({ dest: imgRoad })
 // 
 router.post('/img', upload.single('file'), function (req, res, next) {
-    var ifok = TOKEN.verifyMysqlToken(req.headers.token, req.headers.username);
+    var ifok = TOKEN.verifyMysqlToken(req.headers.token, req.headers.account);
     ifok.then(data => {
         // 修改文件名，默认文件名变成2进制了。
         var time = new Date().getTime();
@@ -35,7 +35,7 @@ router.post('/img', upload.single('file'), function (req, res, next) {
         // 返回我的图片地址
         // 我放在服务器上面的图片存的路径是http://www.yating.online/res/img。前面代理到res了
         var message = {
-            imgUrl: `http://www.yating.online/res/img/${time}.${imgtype}`,
+            imgUrl: `https://www.yating.online/res/img/${time}.${imgtype}`,
             info: "发布成功~",
             code: 1
         }

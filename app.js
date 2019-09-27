@@ -17,6 +17,8 @@ var projectRouter = require('./routes/project');
 var timesRouter = require('./routes/times');
 var uploadRouter = require('./routes/upload');
 var personRouter = require('./routes/person');
+// ai组的
+var aiSpendRouter = require('./routes/ai/selectAiSpend.js');
 
 var app = express();
 
@@ -38,6 +40,8 @@ app.use('/message', messageRouter);
 app.use('/times', timesRouter);
 app.use('/upload', uploadRouter);
 app.use('/person', personRouter);
+// ai组的
+app.use('/aiSpend', aiSpendRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
