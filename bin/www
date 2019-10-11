@@ -7,19 +7,36 @@
 var app = require('../app');
 var debug = require('debug')('nodeafter:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.set('host','0.0.0.0');
+app.set('host', '0.0.0.0');
 /**
  * Create HTTP server.
  */
+// 添加websocket
+// var WebSocket = require('ws');
+// var wss = new WebSocket.Server({ port: 8080 });
+// wss.on('connection', function connection(ws) {
+//   var msg;
+//   console.log('连接成功.');
+//   ws.on('message', function incoming(message) {
+//     console.log('我收到的信息是：', message);
+//     msg=message;
+//     ws.send(`好的我收到了！${msg}`);
+//   });
+// });
 
- // 使用httpcreateServer()方法来创建一个web服务器；
+
+// 添加websocket
+var ws = require('../routes/ws/demo');
+ws();
+
+
+// 使用httpcreateServer()方法来创建一个web服务器；
 var server = http.createServer(app);
 
 /**
